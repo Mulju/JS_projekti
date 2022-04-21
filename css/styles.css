@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 body {
   margin: 0px;
+=======
+html {
+  padding: 10px;
+  background: #888;
+  background-image: url("");
+>>>>>>> villedev
 }
 
 #container {
@@ -9,6 +16,7 @@ body {
   background: blue;
 }
 
+<<<<<<< HEAD
 #imagecontainer {
   
   background: blue;
@@ -19,3 +27,5 @@ body {
   padding-top: 300px;
   padding-right: 100px;
 }
+=======
+>>>>>>> villedev

@@ -1,13 +1,53 @@
 body {
-  margin: 0px;
+  padding: 10px;
 }
 
-#container {
-  width: 100%;
+.container {
+  width: 80%;
   height: 300px;
   position: relative;
-  background: blue;
+  background: #CFB9A5;
+  margin: auto;
+  border-radius: 6px;
 }
+
+a {
+  color: #000;
+  text-align: center;
+  padding: 10px;
+  margin: auto;
+  border-radius: 6px;
+  background: #999;
+}
+
+.navigation {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+nav {
+  background: #7B3E19;
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+html { 
+	background: #888; 
+	padding: 20px; 
+}
+/*
+#container { 
+	width: 100%;
+	max-width: 400px;
+	margin: auto;
+	border: solid 1px #888;
+	border-radius: 6px;
+}*/
 
 /*
 Tekee hienon vino viivan

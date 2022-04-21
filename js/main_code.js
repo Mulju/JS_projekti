@@ -40,23 +40,25 @@ function kuva(slide) {
   const main = document.querySelector('main');
   console.log(slide);
    
-    const article = document.createElement('article')
-    article.className = 'article'
-    main.appendChild(article)
+    const article = document.createElement('article');
+    article.className = 'article';
+    main.appendChild(article);
 
   let img;
   if (slide.photos) {
-    const random = Math.floor(Math.random()*slide.photos.length);
-    img = document.createElement('img');
-    img.src = slide.photos[random].img_src;
-    article.appendChild(img);
-    img.setAttribute("width", "30%");
-    console.log(random);
+    
+    const div = document.getElementsByClassName("slide");
+    let img = document.createElement('img');
+    let random = Math.floor(Math.random()*slide.photos.length);
+    img.img_src = slide.photos[random].img_src;
+    random = Math.floor(Math.random()*slide.photos.length);
+    img = slide.photos[random].img_src;
+
+    img.img_src.setAttribute("width", "500px");
+    img.img_src.setAttribute("width", "500px");
+    div.appendChild(img);
   } else {
-    img = document.createElement('img');
     img.src = 'defaultkuva.jpg';
-    img.alt = 'error';
-    article.appendChild(img);
   }
 
   

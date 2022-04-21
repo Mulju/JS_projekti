@@ -64,6 +64,7 @@ function kuva(slide) {
   
 
 }
+
 fetch('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=1RZqOOQSWmVECbPyRb3x7NRkO6JiEKqfbkSf5wGg')            
 .then(function(vastaus){       
   return vastaus.json();       
@@ -72,3 +73,12 @@ fetch('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&
 }).catch(function(error){      
   console.log(error);        
 }) 
+
+fetch("https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0").then(function(vastaus) {
+  return vastaus.json();
+}).then(function(jotain){
+  console.log("onnas");
+  console.log(jotain);
+}).catch(function(error) {
+  console.log(error);
+})

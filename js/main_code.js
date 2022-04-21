@@ -4,32 +4,30 @@
 
 function tausta(s) {
   
-  console.log(s)
-  
-  const main = document.querySelector('main')
-  
-  const article = document.createElement('article')
-  article.className = 'article'
-  main.appendChild(article)
-
+  const body = document.querySelector('body');
+ 
+  let image;
   if (s.url) {
-    const image = document.createElement('img')
+    image = document.createElement('img');
     image.src = s.url;
     image.alt = s.explanation;
-    article.appendChild(image)
+    body.appendChild(image);
   } else {
-    const image = document.createElement('img')
-    image.src = 'defaultkuva.jpg'
-    image.alt = 'error'
-    article.appendChild(image)
+    image = document.createElement('img');
+    image.src = 'defaultkuva.jpg';
+    image.alt = 'error';
+    body.appendChild(image);
   }
+
+  //image.setAttribute("position", "fixed");
+  //html.setAttribute("background-image", "url(\"" + s.url + "\")");
+
 }
 fetch('https://api.nasa.gov/planetary/apod?api_key=1RZqOOQSWmVECbPyRb3x7NRkO6JiEKqfbkSf5wGg')            
 .then(function(vastaus){       
-  return vastaus.json()       
+  return vastaus.json();       
 }).then(function(s){       
-  tausta(s)
-  console.log(s)           
+  tausta(s);          
 }).catch(function(error){      
-  console.log(error)        
+  console.log(error);        
 })               

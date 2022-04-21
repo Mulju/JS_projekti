@@ -1,10 +1,11 @@
 html {
   padding: 10px;
   background: #888;
+  background-image: url("");
 }
 
 #container {
   padding: 10px;
   background: blue;
-  transform: rotate(45deg);
 }
+

@@ -20,6 +20,7 @@ async function getNews() {
       newsImages.push(news[i].querySelector("ImageURL").innerHTML);
     }
 
+    // Kutsutaan slideshow funktiota, kun fetchaus on valmis
     await kuva(newsImages);
   } catch(error) {
     console.error(error);

@@ -10,7 +10,7 @@ async function getMovieTheaters() {
       console.error("Tapahtui virhe.");
       return;
     }
-  
+    console.log(response);
     // Muutetaan haettu data teksti muotoon. Finnkinon antama api antaa xml muotoista dataa, joten json kääntö ei toimi.
     const rawXML = await response.text();
     // Käytetään DOMParser apia muuttamaan string tyyppinen xml data HTML dokumentiksi

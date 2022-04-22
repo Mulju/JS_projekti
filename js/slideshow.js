@@ -83,3 +83,23 @@ setInterval(function(){
     counter = 1;
   }
 }, 5000);
+
+
+/*
+document.querySelector('p')
+  .addEventListener('mouseover', () => {
+  
+  document.querySelector('p').style = 'visibility: hidden'
+});
+
+document.querySelector('img')
+  .addEventListener('mouseover', () => {
+  
+  document.querySelector('p').style = 'visibility: visible'
+});
+document.querySelector('img')
+  .addEventListener('mouseout', () => {
+  
+  document.querySelector('p').style = 'visibility: hidden'
+});
+*/

@@ -69,7 +69,6 @@ async function getMovies() {
     const rawXML = await response.text();
     const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
     const events = data.querySelectorAll("Event");
-    console.log(events);
 
     const dropDownMenuEvents = document.getElementById("events");
     events.forEach(element => {
@@ -81,6 +80,35 @@ async function getMovies() {
     console.error(error);
   }
 }
+
+/*
+// Tämä funktio hakee 4 uusinta uutista
+async function getNews() {
+  try {
+    const response = await fetch("https://www.finnkino.fi/xml/News/");
+    
+    if (!response.ok) {
+      console.error("Tapahtui virhe.");
+      return;
+    }
+
+    const rawXML = await response.text();
+    const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
+    const news = data.querySelectorAll("NewsArticle");
+    
+    // Tehdään taulukko missä on neljän uusimman uutisen kuvat.
+    const newsImages = [];
+    for(let i = 0; i < 4; i++) {
+      newsImages.push(news[i].querySelector("ImageURL").innerHTML);
+    }
+
+    return newsImages;
+  } catch(error) {
+    console.error(error);
+  }
+}
+getNews();
+*/
 
 getMovieTheaters();
 getMovieDates();

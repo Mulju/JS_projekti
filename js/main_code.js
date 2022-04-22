@@ -1,84 +1,27 @@
 'use strict'
 
-
-
-/*function tausta(background) {
+async function getMovieTheaters() {  
+  // Haetaan Finnkinon auki olevat teatterit
+  const response = await fetch("https://www.finnkino.fi/xml/TheatreAreas/");
   
-  const body = document.querySelector('body');
- 
-  let image;
-  if (background.url) {
-    image = document.createElement('img');
-    image.src = background.url;
-    image.alt = background.explanation;
-    body.appendChild(image);
-  } else {
-    image = document.createElement('img');
-    image.src = 'defaultkuva.jpg';
-    image.alt = 'error';
-    body.appendChild(image);
+  // Virheen sattuessa heitetään virhe ilmoitus
+  if (!response.ok) {
+    console.error("Tapahtui virhe.");
+    return;
   }
 
-  //image.setAttribute("position", "fixed");
-  //html.setAttribute("background-image", "url(\"" + s.url + "\")");
+  // Muutetaan haettu data teksti muotoon. Finnkinon antama api antaa xml muotoista dataa, joten json kääntö ei toimi.
+  const areas = await response.text();
+  // Käytetään DOMParser apia muuttamaan string tyyppinen xml data HTML dokumentiksi
+  const data =  await new DOMParser().parseFromString(areas, "text/xml");
+  // Käytetään document-rajapinnan metodeja datan käsittelyyn
+  const theaters = data.querySelectorAll("Name");
 
-}
-fetch('https://api.nasa.gov/planetary/apod?api_key=1RZqOOQSWmVECbPyRb3x7NRkO6JiEKqfbkSf5wGg')            
-.then(function(vastaus){       
-  return vastaus.json();       
-}).then(function(background){       
-  tausta(background);          
-}).catch(function(error){      
-  console.log(error);        
-}) 
-*/
-
-
-
-function kuva(slide) {
-  
-  const main = document.querySelector('main');
-  console.log(slide);
-   
-    const article = document.createElement('article');
-    article.className = 'article';
-    main.appendChild(article);
-
-  let img;
-  if (slide.photos) {
-    
-    const div = document.getElementsByClassName("slide");
-    let img = document.createElement('img');
-    let random = Math.floor(Math.random()*slide.photos.length);
-    img.img_src = slide.photos[random].img_src;
-    random = Math.floor(Math.random()*slide.photos.length);
-    img = slide.photos[random].img_src;
-
-    img.img_src.setAttribute("width", "500px");
-    img.img_src.setAttribute("width", "500px");
-    div.appendChild(img);
-  } else {
-    img.src = 'defaultkuva.jpg';
-  }
-
-  
-
+  // Käydään kaikki teatterit läpi.
+  // Tähän pitää vielä koodata dropdown menun luominen.
+  theaters.forEach(element => {
+    console.log(element.innerHTML);
+  })
 }
 
-fetch('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=1RZqOOQSWmVECbPyRb3x7NRkO6JiEKqfbkSf5wGg')            
-.then(function(vastaus){       
-  return vastaus.json();       
-}).then(function(slide){       
-  kuva(slide);          
-}).catch(function(error){      
-  console.log(error);        
-}) 
-
-fetch("https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0").then(function(vastaus) {
-  return vastaus.json();
-}).then(function(jotain){
-  console.log("onnas");
-  console.log(jotain);
-}).catch(function(error) {
-  console.log(error);
-})
+const data = getMovieTheaters();

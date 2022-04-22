@@ -1,36 +1,87 @@
 'use strict'
 
-
-
-/*function tausta(background) {
+// Funktio, joka hakee Finnkinon auki olevat teatterit
+async function getMovieTheaters() {  
+  try {
+    const response = await fetch("https://www.finnkino.fi/xml/TheatreAreas/");
+    
+    // Virheen sattuessa heitetään virhe ilmoitus
+    if (!response.ok) {
+      console.error("Tapahtui virhe.");
+      return;
+    }
   
-  const body = document.querySelector('body');
- 
-  let image;
-  if (background.url) {
-    image = document.createElement('img');
-    image.src = background.url;
-    image.alt = background.explanation;
-    body.appendChild(image);
-  } else {
-    image = document.createElement('img');
-    image.src = 'defaultkuva.jpg';
-    image.alt = 'error';
-    body.appendChild(image);
+    // Muutetaan haettu data teksti muotoon. Finnkinon antama api antaa xml muotoista dataa, joten json kääntö ei toimi.
+    const rawXML = await response.text();
+    // Käytetään DOMParser apia muuttamaan string tyyppinen xml data HTML dokumentiksi
+    const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
+    // Käytetään document-rajapinnan metodeja datan käsittelyyn
+    const theaters = data.querySelectorAll("Name");
+  
+    // Käydään kaikki teatterit läpi ja luodaan dropdown menu.
+    const dropDownMenuTheaters = document.getElementById("theaters");
+    theaters.forEach(element => {
+      const option = document.createElement("option");
+      option.innerHTML = element.innerHTML;
+      dropDownMenuTheaters.appendChild(option);
+    })
+  } catch(error) {
+    console.error(error);
   }
-
-  //image.setAttribute("position", "fixed");
-  //html.setAttribute("background-image", "url(\"" + s.url + "\")");
-
 }
-fetch('https://api.nasa.gov/planetary/apod?api_key=1RZqOOQSWmVECbPyRb3x7NRkO6JiEKqfbkSf5wGg')            
-.then(function(vastaus){       
-  return vastaus.json();       
-}).then(function(background){       
-  tausta(background);          
-}).catch(function(error){      
-  console.log(error);        
-}) 
-*/
 
+// Funktio, joka hakee Finnkinon näytöspäivät. Tarkempi kommentointi ylemmässä funktiossa.
+// Syöte pitää vielä parsia nätimmän näköiseksi.
+async function getMovieDates() {
+  try {
+    const response = await fetch("https://www.finnkino.fi/xml/ScheduleDates/");
+    
+    if (!response.ok) {
+      console.error("Tapahtui virhe.");
+      return;
+    }
 
+    const rawXML = await response.text();
+    const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
+    const dates = data.querySelectorAll("dateTime");
+  
+    const dropDownMenuDates = document.getElementById("dates");
+    dates.forEach(element => {
+      const option = document.createElement("option");
+      option.innerHTML = element.innerHTML;
+      dropDownMenuDates.appendChild(option);
+    })
+  } catch(error) {
+    console.error(error);
+  }
+}
+
+// Tämä funktio hakee kaikki elokuvat jotka ovat tällä hetkellä katalogissa
+async function getMovies() {
+  try {
+    const response = await fetch("https://www.finnkino.fi/xml/Events/");
+    
+    if (!response.ok) {
+      console.error("Tapahtui virhe.");
+      return;
+    }
+
+    const rawXML = await response.text();
+    const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
+    const events = data.querySelectorAll("Event");
+    console.log(events);
+
+    const dropDownMenuEvents = document.getElementById("events");
+    events.forEach(element => {
+      const option = document.createElement("option");
+      option.innerHTML = element.querySelector("Title").innerHTML;
+      dropDownMenuEvents.appendChild(option);
+    })
+  } catch(error) {
+    console.error(error);
+  }
+}
+
+getMovieTheaters();
+getMovieDates();
+getMovies();

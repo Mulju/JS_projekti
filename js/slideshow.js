@@ -16,19 +16,21 @@ async function getNews() {
     
     // Tehdään taulukko missä on neljän uusimman uutisen kuvat.
     const newsImages = [];
+    const newsArticles = [];
     for(let i = 2; i < 6; i++) {
       newsImages.push(news[i].querySelector("ImageURL").innerHTML);
+      newsArticles.push(news[i].querySelector("ArticleURL").innerHTML);
     }
 
     // Kutsutaan slideshow funktiota, kun fetchaus on valmis
-    await kuva(newsImages);
+    await kuva(newsImages, newsArticles);
   } catch(error) {
     console.error(error);
   }
 }
 //Funktio tekee img elementit slide classiin
 //Sijoittaa ylemmän taulukon kuvat img elementtiin
-async function kuva(slide) {
+async function kuva(slide, articles) {
   let imgfirst;
   let imgsecond;
   let imgthird;

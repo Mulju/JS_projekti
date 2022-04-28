@@ -6,7 +6,7 @@ body {
   width: 80%;
   height: 300px;
   position: relative;
-  background: #CFB9A5;
+  background: #2c2c2c;
   margin: auto;
   border-radius: 6px;
 }
@@ -14,10 +14,11 @@ body {
 a {
   color: #000;
   text-align: center;
+  text-decoration: none;
   padding: 10px;
   margin: auto;
   border-radius: 6px;
-  background: #999;
+  background: rgb(255, 213, 0);
 }
 
 .navigation {
@@ -29,7 +30,7 @@ a {
 }
 
 nav {
-  background: #7B3E19;
+  background: #ffd900;
   margin: auto;
   width: 80%;
   padding: 10px;
@@ -37,7 +38,7 @@ nav {
 }
 
 html { 
-	background: #888; 
+	background: rgb(0, 0, 0); 
 	padding: 20px; 
 }
 /*
@@ -61,4 +62,9 @@ Tekee hienon vino viivan
   padding-right: 100px;
 }
 */
+
+.logo img {
+  width: 100px;
+  height: 100px;
+}
 

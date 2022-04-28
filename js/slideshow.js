@@ -16,7 +16,7 @@ async function getNews() {
     
     // Tehdään taulukko missä on neljän uusimman uutisen kuvat.
     const newsImages = [];
-    for(let i = 0; i < 4; i++) {
+    for(let i = 2; i < 6; i++) {
       newsImages.push(news[i].querySelector("ImageURL").innerHTML);
     }
 

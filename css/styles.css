@@ -63,8 +63,9 @@ Tekee hienon vino viivan
 }
 */
 
-.logo img {
-  width: 100px;
-  height: 100px;
+#header-logo {
+  height: 60px;
+  margin: 20px;
+  
 }
 

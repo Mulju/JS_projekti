@@ -26,7 +26,8 @@ async function getNews() {
     console.error(error);
   }
 }
-
+//Funktio tekee img elementit slide classiin
+//Sijoittaa ylemmän taulukon kuvat img elementtiin
 async function kuva(slide) {
   let imgfirst;
   let imgsecond;
@@ -66,16 +67,27 @@ async function kuva(slide) {
       
 getNews();
 
+
+
+
+//Laskee siirtymien määrän ja ajan milloin siirtymä tapahtuu
 let counter = 1;
 setInterval(function(){
-  document.getElementById('radio' + counter).checked = true;
+  document.getElementById('r' + counter).checked = true;
   counter++;
   if(counter > 4){
     counter = 1;
   }
-}, 5000);
+  
+}, 5000); //Siirtymien aikaväli millisekunneissa 5 sekunnin välein
 
 
+//let stopanimation = document.getElementsByClassName("slide");
+
+//stopanimation.addEventListener("mouseenter", function( event ) {
+ 
+
+  
 /*
 document.querySelector('p')
   .addEventListener('mouseover', () => {

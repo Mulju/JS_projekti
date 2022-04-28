@@ -6,19 +6,20 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #23E3C9;
+  background: #000000;
 }
 
+
 .slider{
-  width: 800px;
-  height: 500px;
+  width: 500px;
+  height: 300px;
   border-radius: 10px;
   overflow: hidden;
 }
 
 .slides{
   width: 500%;
-  height: 500px;
+  height: 300px;
   display: flex;
 }
 
@@ -28,26 +29,26 @@ body{
 
 .slide{
   width: 20%;
-  transition: 2s;
+  transition: 3s;
 }
 
 .slide img{
-  width: 800px;
-  height: 500px;
+  width: 500px;
+  height: 300px;
 }
 
-/*css for manual slide navigation*/
+/*Manuaali navigointi*/
 
 .navigation-manual{
   position: absolute;
-  width: 800px;
+  width: 500px;
   margin-top: -40px;
   display: flex;
   justify-content: center;
 }
 
 .manual-btn{
-  border: 2px solid #40D3DC;
+  border: 2px solid #d4dc40;
   padding: 5px;
   border-radius: 10px;
   cursor: pointer;
@@ -59,37 +60,37 @@ body{
 }
 
 .manual-btn:hover{
-  background: #40D3DC;
+  background: #c7dc40;
 }
 
-#radio1:checked ~ .first{
+#r1:checked ~ .first{
   margin-left: 0;
 }
 
-#radio2:checked ~ .first{
+#r2:checked ~ .first{
   margin-left: -20%;
 }
 
-#radio3:checked ~ .first{
+#r3:checked ~ .first{
   margin-left: -40%;
 }
 
-#radio4:checked ~ .first{
+#r4:checked ~ .first{
   margin-left: -60%;
 }
 
-/*css for automatic navigation*/
+/*Automaattinen navigointi*/
 
 .navigation-auto{
   position: absolute;
   display: flex;
-  width: 800px;
+  width: 500px;
   justify-content: center;
-  margin-top: 460px;
+  margin-top: 260px;
 }
 
 .navigation-auto div{
-  border: 2px solid #40D3DC;
+  border: 2px solid #d2dc40;
   padding: 5px;
   border-radius: 10px;
   transition: 1s;
@@ -99,19 +100,19 @@ body{
   margin-right: 40px;
 }
 
-#radio1:checked ~ .navigation-auto .auto-btn1{
-  background: #40D3DC;
+#r1:checked ~ .navigation-auto .auto-btn1{
+  background: #d9dc40;
 }
 
-#radio2:checked ~ .navigation-auto .auto-btn2{
-  background: #40D3DC;
+#r2:checked ~ .navigation-auto .auto-btn2{
+  background: #dccc40;
 }
 
-#radio3:checked ~ .navigation-auto .auto-btn3{
-  background: #40D3DC;
+#r3:checked ~ .navigation-auto .auto-btn3{
+  background: #dcdc40;
 }
 
-#radio4:checked ~ .navigation-auto .auto-btn4{
-  background: #40D3DC;
+#r4:checked ~ .navigation-auto .auto-btn4{
+  background: #dccc40;
 }
 

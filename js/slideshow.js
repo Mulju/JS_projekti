@@ -38,6 +38,11 @@ async function kuva(slide, articles) {
   console.log(slide);
   if (slide) {
     const slide_elem = document.getElementsByClassName("slide");
+    
+    for(let i = 0; i < 4; i++) {
+      slide_elem[i].setAttribute("href", articles[i]);
+    }
+
     imgfirst = document.createElement('img');
     imgfirst.src = slide[0];
       

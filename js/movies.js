@@ -30,8 +30,8 @@ async function getMovieTheaters() {
   }
 }
 
-// Funktio, joka hakee Finnkinon näytöspäivät. Tarkempi kommentointi ylemmässä funktiossa.
-// Syöte pitää vielä parsia nätimmän näköiseksi.
+// Funktio, joka hakee Finnkinon näytöspäivät.
+// Muuten samat kommentoinnit kuin yllä, mutta syötteen muotoilun takia uusia kommentteja.
 async function getMovieDates() {
   try {
     const response = await fetch("https://www.finnkino.fi/xml/ScheduleDates/");
@@ -45,10 +45,53 @@ async function getMovieDates() {
     const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
     const dates = data.querySelectorAll("dateTime");
   
+    // Luodaan tämän päivämäärän olio
+    const today = new Date();
+    // Huomisen päivämäärän olio
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
     const dropDownMenuDates = document.getElementById("dates");
     dates.forEach(element => {
       const option = document.createElement("option");
-      option.innerHTML = element.innerHTML;
+      
+      // Muotoillaan päivien tulostus nätimmän näköiseksi
+      // Haetaan apin antamasta datasta päivämäärä
+      const date = new Date(element.innerHTML.split("T")[0]);
+      // Asetetaan päivämäärän tulostamiseen muotoilun asetukset
+      const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+      // Splitataan luotu päivämäärä muotoilua varten
+      const split = date.toLocaleDateString('fi', options).split(" ");
+      let str = "";
+      
+      // If vaihtoehdot, jotta tiedetään onko kyseessä tämä päivä, huominen, tai jokin muu päivä
+      // Jos on tämä päivä niin..
+      if(today.toLocaleDateString("fi", options) == date.toLocaleDateString('fi', options)) {
+        str = "Tänään, ";
+        for(let i = 1; i < split.length; i++) {
+          str = str + split[i] + " ";
+        }
+      // Jos on huominen niin..
+      } else if(tomorrow.toLocaleDateString("fi", options) == date.toLocaleDateString("fi", options)) {
+        str = "Huomenna, ";
+        for(let i = 1; i < split.length; i++) {
+          str = str + split[i] + " ";
+        }
+      // Jos joku muu päivä niin..
+      } else {
+        for(let i = 0; i < split.length; i++) {
+          if(i == 0)
+          {
+            // Vaihdetaan viikon päivän ensimmäinen kirjain isoksi
+            str = split[i].charAt(0).toUpperCase() + split[i].slice(1) + ", ";
+          }
+          else {
+            str = str + split[i] + " ";
+          }
+        }
+      }
+
+      option.innerHTML = str;
       dropDownMenuDates.appendChild(option);
     })
   } catch(error) {

@@ -35,6 +35,7 @@ nav {
   width: 80%;
   padding: 10px;
   border-radius: 6px;
+  position: sticky; top: 0;
 }
 
 html { 
@@ -72,7 +73,7 @@ Tekee hienon vino viivan
 .slideshow{
   margin: 0;
   padding: 0;
-  height: 50vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

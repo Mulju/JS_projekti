@@ -8,16 +8,58 @@
   <link href="../css/styles.css" rel="stylesheet">
   <script defer src="../js/main_code.js"></script>
   <script defer src="../js/movies.js"></script>
+  <script defer src="../js/slideshow.js"></script>
 </head>
 <body>
   <nav>
     <div class="container navigation"> 
       <img id="header-logo" src="../mhlogo.png">
-      <a href="https://en.wikipedia.org/wiki/Turtle">Nappura</a>
-      <a href="https://en.wikipedia.org/wiki/Turtle">Nappura</a>
-      <a href="https://en.wikipedia.org/wiki/Turtle">Nappura</a>
+      <a href="https://en.wikipedia.org/wiki/Turtle" class="nappura">Nappura</a>
+      <a href="https://en.wikipedia.org/wiki/Turtle" class="nappura">Nappura</a>
+      <a href="https://en.wikipedia.org/wiki/Turtle" class="nappura">Nappura</a>
     </div>
   </nav>
+
+  <br>
+  <br>
+
+  <div class="slideshow">
+    <span class="dot"></span>
+    <!--Kuva esitys alkaa tästä-->
+    <div class="slider">
+      <div class="slides">
+        <!--Radio napit-->
+        <input type="radio" name="radio-btn" id="r1">
+        <input type="radio" name="radio-btn" id="r2">
+        <input type="radio" name="radio-btn" id="r3">
+        <input type="radio" name="radio-btn" id="r4">
+        <!--Esityksen kuvat-->      
+        <a href="https://www.finnkino.fi/ajankohtaista" class="slide first">
+        </a>          
+        <a href="https://www.finnkino.fi/sarjaliput/osta-sarjalippuja" class="slide">
+        </a>        
+        <a href="https://www.finnkino.fi/faq" class="slide">
+        </a>                    
+        <a href="https://www.finnkino.fi/ajankohtaista" class="slide">
+        </a>           
+        <!--Navigaatio automaattinen-->
+        <div class="navigation-auto">
+          <div class="auto-btn1"></div>
+          <div class="auto-btn2"></div>
+          <div class="auto-btn3"></div>
+          <div class="auto-btn4"></div>
+        </div>
+      </div>
+      <!--Navigaatio manuaalinen-->
+      <div class="navigation-manual">
+        <label for="r1" class="manual-btn"></label>
+        <label for="r2" class="manual-btn"></label>
+        <label for="r3" class="manual-btn"></label>
+        <label for="r4" class="manual-btn"></label>
+      </div>    
+    </div>
+    <!--Kuva esitys loppuu tähän-->
+  </div>
 
   <br>
   <br>
@@ -30,15 +72,8 @@
     <select name="events" id="events">
     </select>
   </div>
-
-  <br>
-  <br>
-
-  <div class="container">
-
-  </div>
   <main>
-    <iframe src='https://mars.nasa.gov/layout/embed/image/insightweather/' width='800' height='530'  scrolling='no' frameborder='0'></iframe>
+   
   </main>
 </body>
 </html>

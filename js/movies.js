@@ -1,5 +1,6 @@
 'use strict';
 
+// Muuttujien määrittelyjä
 const button = document.querySelector("button");
 const select = document.querySelectorAll("select");
 // Asetetaan päivämäärän tulostamiseen muotoilun asetukset
@@ -15,6 +16,9 @@ let movName = "007 No Time to Die";
 const theaters = [];
 const dates = [];
 
+
+
+// Funktioita
 // Funktio, joka hakee Finnkinon auki olevat teatterit
 async function getMovieTheaters() {  
   try {
@@ -110,10 +114,24 @@ async function getMovieDates() {
             str = split[i].charAt(0).toUpperCase() + split[i].slice(1) + ", ";
           }
           else {
-            str = str + split[i] + " ";
+            // Tämä if else jotta vikalla rivillä ei ole väliä
+            if(i == (split.length - 1)) {
+              str = str + split[i];
+            } else {
+              str = str + split[i] + " ";
+            }
           }
         }
       }
+
+      // Vaihetaan päivän formatointi hetkeksi, jotta saadaan hakua varten päivä oikeaan formaattiin
+      options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+      // Luodaan päivämäärä olio
+      const date = {
+        searchDate: elementDate.toLocaleDateString("fi", options),
+        optionDate: str
+      };
+      dates.push(date);
 
       option.innerHTML = str;
       dropDownMenuDates.appendChild(option);
@@ -175,18 +193,16 @@ async function findMovieByName(movieName) {
         // Luodaan päivä olio leffan aikaa varten
         const date = new Date(element.querySelector("dttmShowStart").innerHTML);
         options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric" };
-
-        // Leffa olio mihin talletetaan halutut tiedot
-        const show = {
-          movieName: movieName,
-          movieImage: element.querySelector("Images").querySelector("EventMediumImagePortrait").innerHTML,
-          theatreName: element.querySelector("TheatreAndAuditorium").innerHTML,
-          time: date.toLocaleDateString('fi', options),
-          length: element.querySelector("LengthInMinutes").innerHTML,
-          ageRating: element.querySelector("Rating").innerHTML,
-          genres: element.querySelector("Genres").innerHTML,
-          presentation: element.querySelector("PresentationMethod").innerHTML
-        };
+        let show = {
+              movieName: movieName,
+              movieImage: element.querySelector("Images").querySelector("EventMediumImagePortrait").innerHTML,
+              theatreName: element.querySelector("TheatreAndAuditorium").innerHTML,
+              time: date.toLocaleDateString('fi', options),
+              length: element.querySelector("LengthInMinutes").innerHTML,
+              ageRating: element.querySelector("Rating").innerHTML,
+              genres: element.querySelector("Genres").innerHTML,
+              presentation: element.querySelector("PresentationMethod").innerHTML
+            };
 
         movieEvents.push(show);
       }
@@ -197,6 +213,92 @@ async function findMovieByName(movieName) {
   }
 }
 
+// Toimiva haku funktio
+async function getMovies2 () {
+  const response = await fetch("https://www.finnkino.fi/xml/Schedule/?area=" + theaID + "&dt=" + searchDate);
+  
+  if (!response.ok) {
+    console.error("Tapahtui virhe.");
+    return;
+  }
+
+  const rawXML = await response.text();
+  const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
+  const events = data.querySelector("Shows").querySelectorAll("Show");
+
+  // Ei vältsii tarvita jos elementtien luominen suoritetaan alla olevassa for eachissä
+  const movieEvents = [];
+    
+  events.forEach(element => {
+    // Luodaan päivä olio leffan aikaa varten
+    const date = new Date(element.querySelector("dttmShowStart").innerHTML);
+    options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric" };
+    let show;
+
+    // Leffa olio mihin talletetaan halutut tiedot. If lauseet sen takia että kaikissa elokuvissa ei ollut saatavilla kuvaa
+    if(element.querySelector("Images")) {
+      if(element.querySelector("Images").querySelector("EventMediumImagePortrait")) {
+        show = {
+          movieName: element.querySelector("Title").innerHTML,
+          movieImage: element.querySelector("Images").querySelector("EventMediumImagePortrait").innerHTML,
+          theatreName: element.querySelector("TheatreAndAuditorium").innerHTML,
+          time: date.toLocaleDateString('fi', options),
+          length: element.querySelector("LengthInMinutes").innerHTML,
+          ageRating: element.querySelector("Rating").innerHTML,
+          genres: element.querySelector("Genres").innerHTML,
+          presentation: element.querySelector("PresentationMethod").innerHTML
+        };
+      }
+    } else {
+      show = {
+        movieName: element.querySelector("Title").innerHTML,
+        //movieImage: element.querySelector("Images").querySelector("EventMediumImagePortrait").innerHTML,
+        theatreName: element.querySelector("TheatreAndAuditorium").innerHTML,
+        time: date.toLocaleDateString('fi', options),
+        length: element.querySelector("LengthInMinutes").innerHTML,
+        ageRating: element.querySelector("Rating").innerHTML,
+        genres: element.querySelector("Genres").innerHTML,
+        presentation: element.querySelector("PresentationMethod").innerHTML
+    
+      }
+    }
+    movieEvents.push(show);
+  })
+  //console.log(movieEvents);
+}
+
+getMovies2();
+
+// Eventlistenerejä
+// Listener joka vaihtaa hakuun käytetyn teatterin
+select[0].addEventListener("change", () => {
+  for(let i = 0; i < theaters.length; i++) {
+    if(select[0].value == theaters[i].name) {
+      theaID = theaters[i].id;
+      break;
+    }
+  }
+  console.log(theaID);
+  // Tähän funktio kutsu joka suorittaa haun halutuilla parametreillä theaID ja date
+  //getMovies2();
+});
+
+// Listener joka vaihtaa hakuun käytettyä päivämäärää
+select[1].addEventListener("change", () => {
+  for(let i = 0; i < dates.length; i++) {
+    if(select[1].value == dates[i].optionDate) {
+      searchDate = dates[i].searchDate;
+      break;
+    }
+  }
+
+  console.log(searchDate);
+  // Tähän funkkari joka suorittaa haun
+  //getMovies2();
+});
+
+
+// Tämän voi todennäköisesti poistaa
 select[2].addEventListener("change", () => {
   movName = select[2].value;
   console.log(movName);

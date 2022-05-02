@@ -3,20 +3,16 @@
 // Muuttujien määrittelyjä
 const button = document.querySelector("button");
 const select = document.querySelectorAll("select");
-// Asetetaan päivämäärän tulostamiseen muotoilun asetukset
-let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
 // Oletus arvot millä tehdään ensimmäinen haku
 let theaID = "1029";
 // Muotoillan päivämäärä parametrina haluttuun muotoon
-let searchDate = new Date().toLocaleDateString("fi", options);
+let searchDate = formatDates(new Date(), 0);
 let movName = "007 No Time to Die";
 
 // Globaalit listat joihin tallennetaan teatterit ja päivät
 const theaters = [];
 const dates = [];
-
-
 
 // Funktioita
 // Funktio, joka hakee Finnkinon auki olevat teatterit
@@ -74,10 +70,9 @@ async function getMovieDates() {
     const elements = data.querySelectorAll("dateTime");
   
     // Luodaan tämän päivämäärän olio
-    const today = new Date();
+    const today = formatDates(new Date(), 0);
     // Huomisen päivämäärän olio
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrow = formatDates(new Date(), 1);
 
     const dropDownMenuDates = document.getElementById("dates");
     elements.forEach(element => {
@@ -85,50 +80,34 @@ async function getMovieDates() {
       
       // Muotoillaan päivien tulostus nätimmän näköiseksi
       // Haetaan apin antamasta datasta päivämäärä
-      const elementDate = new Date(element.innerHTML.split("T")[0]);
-      // Asetetaan päivämäärän tulostamiseen muotoilun asetukset
-      options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
-      // Splitataan luotu päivämäärä muotoilua varten
-      const split = elementDate.toLocaleDateString('fi', options).split(" ");
+      const elementDate = formatDates(new Date(element.innerHTML.split("T")[0]), 0);
+      
       let str = "";
       
       // If vaihtoehdot, jotta tiedetään onko kyseessä tämä päivä, huominen, tai jokin muu päivä
       // Jos on tämä päivä niin..
-      if(today.toLocaleDateString("fi", options) == elementDate.toLocaleDateString('fi', options)) {
-        str = "Tänään, ";
-        for(let i = 1; i < split.length; i++) {
-          str = str + split[i] + " ";
-        }
-      // Jos on huominen niin..
-      } else if(tomorrow.toLocaleDateString("fi", options) == elementDate.toLocaleDateString("fi", options)) {
-        str = "Huomenna, ";
-        for(let i = 1; i < split.length; i++) {
-          str = str + split[i] + " ";
-        }
-      // Jos joku muu päivä niin..
+      if(today == elementDate) {
+        str = "Tänään, " + elementDate;
+      
+        // Jos on huominen niin..
+      } else if(tomorrow == elementDate) {
+        str = "Huomenna, " + elementDate;
+      
+        // Jos joku muu päivä niin..
       } else {
-        for(let i = 0; i < split.length; i++) {
-          if(i == 0)
-          {
-            // Vaihdetaan viikon päivän ensimmäinen kirjain isoksi
-            str = split[i].charAt(0).toUpperCase() + split[i].slice(1) + ", ";
-          }
-          else {
-            // Tämä if else jotta vikalla rivillä ei ole väliä
-            if(i == (split.length - 1)) {
-              str = str + split[i];
-            } else {
-              str = str + split[i] + " ";
-            }
-          }
-        }
+        // Asetukset toLocaleDateString funktiota varten
+        const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+       
+        // Stringin splittaus ison alkukirjaimen asettamista varten
+        const split = new Date(element.innerHTML.split("T")[0]).toLocaleDateString("fi", options).split(" ");
+       
+        // Iso alkukirjain viikonpäivälle
+        str = split[0].charAt(0).toUpperCase() + split[0].slice(1) + ", " + elementDate;
       }
 
-      // Vaihetaan päivän formatointi hetkeksi, jotta saadaan hakua varten päivä oikeaan formaattiin
-      options = { year: 'numeric', month: 'numeric', day: 'numeric' };
       // Luodaan päivämäärä olio
       const date = {
-        searchDate: elementDate.toLocaleDateString("fi", options),
+        searchDate: elementDate,
         optionDate: str
       };
       dates.push(date);
@@ -166,13 +145,14 @@ async function getMovies() {
   }
 }
 
+/*
 // Tällä funktiolla haetaan leffanimi valikosta valitun leffan nimellä kaikki näytökset
 async function findMovieByName(movieName) {
   try {
     /*
     const testi = "?dt=02.05.2022"
     const response = await fetch("https://www.finnkino.fi/xml/Schedule/" + testi);
-    */
+    
     const response = await fetch("https://www.finnkino.fi/xml/Schedule/");
     
     if (!response.ok) {
@@ -212,6 +192,7 @@ async function findMovieByName(movieName) {
     console.error(error);
   }
 }
+*/
 
 // Toimiva haku funktio
 async function getMovies2 () {
@@ -232,7 +213,7 @@ async function getMovies2 () {
   events.forEach(element => {
     // Luodaan päivä olio leffan aikaa varten
     const date = new Date(element.querySelector("dttmShowStart").innerHTML);
-    options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric" };
+    const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric" };
     let show;
 
     // Leffa olio mihin talletetaan halutut tiedot. If lauseet sen takia että kaikissa elokuvissa ei ollut saatavilla kuvaa
@@ -264,10 +245,36 @@ async function getMovies2 () {
     }
     movieEvents.push(show);
   })
-  //console.log(movieEvents);
+  console.log(movieEvents);
 }
 
-getMovies2();
+// Tämä funktio lisää päivämäärän tai kuukauden alkuun 0 mikäli yksinumeroinen
+function ddmmyyyy(num) {
+  return num.toString().padStart(2, '0');
+}
+
+// Funktio köyttää ylläolevaa funktiota formatoimaan päivä-olion hakua varten muotoon dd.mm.yyyy
+// Toinen parametri sitä varten, että saa huomisen päivämäärän tarvittaessa
+function formatDates(date, num) {
+  if(num) {
+    const tempArray = [
+      // Tässä +1 jotta saadaan huomisen päivämäärä
+      ddmmyyyy(date.getDate() + 1),
+      // Tässä +1 koska tammikuu on arvo 0
+      ddmmyyyy(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('.');
+    return tempArray;
+  } else {
+    const tempArray = [
+      ddmmyyyy(date.getDate()),
+      ddmmyyyy(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('.');
+    return tempArray; 
+  }
+}
+
 
 // Eventlistenerejä
 // Listener joka vaihtaa hakuun käytetyn teatterin
@@ -280,7 +287,7 @@ select[0].addEventListener("change", () => {
   }
   console.log(theaID);
   // Tähän funktio kutsu joka suorittaa haun halutuilla parametreillä theaID ja date
-  //getMovies2();
+  getMovies2();
 });
 
 // Listener joka vaihtaa hakuun käytettyä päivämäärää
@@ -292,9 +299,8 @@ select[1].addEventListener("change", () => {
     }
   }
 
-  console.log(searchDate);
   // Tähän funkkari joka suorittaa haun
-  //getMovies2();
+  getMovies2();
 });
 
 

@@ -3,3 +3,5 @@
 getMovieTheaters();
 getMovieDates();
 getMovies();
+
+getMovies2();

@@ -160,10 +160,10 @@ async function getMovies2 () {
 
   // Ei vältsii tarvita jos elementtien luominen suoritetaan alla olevassa for eachissä
   const movieEvents = [];
-  const auditoriumArray = [];
-  const presentationArray = [];
-
+  
   events.forEach(element => {
+    const auditoriumArray = [];
+    const presentationArray = [];
     // Luodaan päivä olio leffan aikaa varten
     const date = new Date(element.querySelector("dttmShowStart").innerHTML);
     const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric" };
@@ -198,6 +198,7 @@ async function getMovies2 () {
     let timeNotInArray = true;
     let index = 0;
     let jindex = 0;
+    
     for(let i = 0; i < movieEvents.length; i++) {
       // If lause joka tarkistaa ettei viitata NULL:iin
       if(movieEvents[i]) {
@@ -231,13 +232,14 @@ async function getMovies2 () {
       else {
         let jindex = 0;
         for(let j = 0; j < movieEvents[index].presentationInformation.length; j++) {
-          // Jos tän hetkinen näytösaika on jo listassa
+          // Jos tän hetkinen näytösaika on jo listassa, onko myös näytösaika?
           if(movieEvents[index].presentationInformation[j].time == timeHours) {
             timeNotInArray = false;
             jindex = j;
           }
+          console.log(movieEvents[index].presentationInformation[j].time + " ja " + timeHours);
         }
-   
+        
         // .push vain teatterin nimi ja 2D/3D jos muuttujan arvo false
         // jos muuttujan arvo true .push presentationelement
         if(timeNotInArray) {
@@ -245,6 +247,7 @@ async function getMovies2 () {
         }
         else {
           movieEvents[index].presentationInformation[jindex].theaAuditPres.push(theaAuditObject);
+          console.log("Else lause");
         }
       }
     }

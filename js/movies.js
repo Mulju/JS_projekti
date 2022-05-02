@@ -145,55 +145,6 @@ async function getMovies() {
   }
 }
 
-/*
-// Tällä funktiolla haetaan leffanimi valikosta valitun leffan nimellä kaikki näytökset
-async function findMovieByName(movieName) {
-  try {
-    /*
-    const testi = "?dt=02.05.2022"
-    const response = await fetch("https://www.finnkino.fi/xml/Schedule/" + testi);
-    
-    const response = await fetch("https://www.finnkino.fi/xml/Schedule/");
-    
-    if (!response.ok) {
-      console.error("Tapahtui virhe.");
-      return;
-    }
-
-    const rawXML = await response.text();
-    const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
-    const events = data.querySelector("Shows").querySelectorAll("Show");
-    // Tätä ei ehkä tarvita
-    
-    const movieEvents = [];
-    
-    events.forEach(element => {
-      // Jos leffan nimi vastaa haettua elokuvan nimeä niin..
-      if(element.querySelector("Title").innerHTML == movieName) {
-        // Luodaan päivä olio leffan aikaa varten
-        const date = new Date(element.querySelector("dttmShowStart").innerHTML);
-        options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric" };
-        let show = {
-              movieName: movieName,
-              movieImage: element.querySelector("Images").querySelector("EventMediumImagePortrait").innerHTML,
-              theatreName: element.querySelector("TheatreAndAuditorium").innerHTML,
-              time: date.toLocaleDateString('fi', options),
-              length: element.querySelector("LengthInMinutes").innerHTML,
-              ageRating: element.querySelector("Rating").innerHTML,
-              genres: element.querySelector("Genres").innerHTML,
-              presentation: element.querySelector("PresentationMethod").innerHTML
-            };
-
-        movieEvents.push(show);
-      }
-    })
-    console.log(movieEvents);
-  } catch(error) {
-    console.error(error);
-  }
-}
-*/
-
 // Toimiva haku funktio
 async function getMovies2 () {
   const response = await fetch("https://www.finnkino.fi/xml/Schedule/?area=" + theaID + "&dt=" + searchDate);
@@ -209,7 +160,9 @@ async function getMovies2 () {
 
   // Ei vältsii tarvita jos elementtien luominen suoritetaan alla olevassa for eachissä
   const movieEvents = [];
-    
+  const auditoriumArray = [];
+  const presentationArray = [];
+
   events.forEach(element => {
     // Luodaan päivä olio leffan aikaa varten
     const date = new Date(element.querySelector("dttmShowStart").innerHTML);
@@ -217,7 +170,6 @@ async function getMovies2 () {
     let show;
     const time = date.toLocaleDateString('fi', options).split(" ");
     const timeHours = "klo " + time[time.length - 1];
-    const timeArray = [];
 
     // Leffa olio mihin talletetaan halutut tiedot. If lauseet sen takia että kaikissa elokuvissa ei ollut saatavilla kuvaa
     if(element.querySelector("Images")) {
@@ -228,11 +180,7 @@ async function getMovies2 () {
           length: element.querySelector("LengthInMinutes").innerHTML,
           ageRating: element.querySelector("Rating").innerHTML,
           genres: element.querySelector("Genres").innerHTML,
-          presentationInformation: {
-            presentationMethod: element.querySelector("PresentationMethod").innerHTML,
-            time: timeHours,
-            theatreName: element.querySelector("TheatreAndAuditorium").innerHTML
-          }
+          presentationInformation: presentationArray
         };
       }
     } else {
@@ -242,23 +190,64 @@ async function getMovies2 () {
         length: element.querySelector("LengthInMinutes").innerHTML,
         ageRating: element.querySelector("Rating").innerHTML,
         genres: element.querySelector("Genres").innerHTML,
-        presentationInformation: {
-          presentationMethod: element.querySelector("PresentationMethod").innerHTML,
-          time: timeHours,
-          theatreName: element.querySelector("TheatreAndAuditorium").innerHTML
-        }
+        presentationInformation: presentationArray
       };
     }
     
+    let movieNotInArray = true;
+    let timeNotInArray = true;
+    let index = 0;
+    let jindex = 0;
     for(let i = 0; i < movieEvents.length; i++) {
+      // If lause joka tarkistaa ettei viitata NULL:iin
       if(movieEvents[i]) {
+        // Onko elokuvan nimi jo listassa?
         if(movieEvents[i].movieName == element.querySelector("Title").innerHTML) {
-          console.log("moi");
+          movieNotInArray = false;
+          index = i;
         }
       }
     }
+   
+   const presentationElement = {
+     time: timeHours,
+     theaAuditPres: auditoriumArray
+    }
+    
+    const theaAuditObject = {
+      presentationMethod: element.querySelector("PresentationMethod").innerHTML,
+      theatreName: element.querySelector("TheatreAndAuditorium").innerHTML
+    }
 
-    movieEvents.push(show);
+    // Uloin if, koska välillä api palauttaa NULL:in
+    if(show) {
+      // Onko elokuvan nimi jo taulukossa?
+      if(movieNotInArray) {
+        // Lisätään näytös elokuva taulukkoon
+        presentationElement.theaAuditPres.push(theaAuditObject);
+        show.presentationInformation.push(presentationElement);
+        movieEvents.push(show);
+      }
+      else {
+        let jindex = 0;
+        for(let j = 0; j < movieEvents[index].presentationInformation.length; j++) {
+          // Jos tän hetkinen näytösaika on jo listassa
+          if(movieEvents[index].presentationInformation[j].time == timeHours) {
+            timeNotInArray = false;
+            jindex = j;
+          }
+        }
+   
+        // .push vain teatterin nimi ja 2D/3D jos muuttujan arvo false
+        // jos muuttujan arvo true .push presentationelement
+        if(timeNotInArray) {
+          movieEvents[index].presentationInformation.push(presentationElement);
+        }
+        else {
+          movieEvents[index].presentationInformation[jindex].theaAuditPres.push(theaAuditObject);
+        }
+      }
+    }
   })
 
   console.log(movieEvents);

@@ -215,6 +215,9 @@ async function getMovies2 () {
     const date = new Date(element.querySelector("dttmShowStart").innerHTML);
     const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric" };
     let show;
+    const time = date.toLocaleDateString('fi', options).split(" ");
+    const timeHours = "klo " + time[time.length - 1];
+    const timeArray = [];
 
     // Leffa olio mihin talletetaan halutut tiedot. If lauseet sen takia että kaikissa elokuvissa ei ollut saatavilla kuvaa
     if(element.querySelector("Images")) {
@@ -222,29 +225,42 @@ async function getMovies2 () {
         show = {
           movieName: element.querySelector("Title").innerHTML,
           movieImage: element.querySelector("Images").querySelector("EventMediumImagePortrait").innerHTML,
-          theatreName: element.querySelector("TheatreAndAuditorium").innerHTML,
-          time: date.toLocaleDateString('fi', options),
           length: element.querySelector("LengthInMinutes").innerHTML,
           ageRating: element.querySelector("Rating").innerHTML,
           genres: element.querySelector("Genres").innerHTML,
-          presentation: element.querySelector("PresentationMethod").innerHTML
+          presentationInformation: {
+            presentationMethod: element.querySelector("PresentationMethod").innerHTML,
+            time: timeHours,
+            theatreName: element.querySelector("TheatreAndAuditorium").innerHTML
+          }
         };
       }
     } else {
       show = {
         movieName: element.querySelector("Title").innerHTML,
-        //movieImage: element.querySelector("Images").querySelector("EventMediumImagePortrait").innerHTML,
-        theatreName: element.querySelector("TheatreAndAuditorium").innerHTML,
-        time: date.toLocaleDateString('fi', options),
+        // movieImage: element.querySelector("Images").querySelector("EventMediumImagePortrait").innerHTML,
         length: element.querySelector("LengthInMinutes").innerHTML,
         ageRating: element.querySelector("Rating").innerHTML,
         genres: element.querySelector("Genres").innerHTML,
-        presentation: element.querySelector("PresentationMethod").innerHTML
+        presentationInformation: {
+          presentationMethod: element.querySelector("PresentationMethod").innerHTML,
+          time: timeHours,
+          theatreName: element.querySelector("TheatreAndAuditorium").innerHTML
+        }
+      };
+    }
     
+    for(let i = 0; i < movieEvents.length; i++) {
+      if(movieEvents[i]) {
+        if(movieEvents[i].movieName == element.querySelector("Title").innerHTML) {
+          console.log("moi");
+        }
       }
     }
+
     movieEvents.push(show);
   })
+
   console.log(movieEvents);
 }
 

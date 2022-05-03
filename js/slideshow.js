@@ -80,7 +80,7 @@ getNews();
 
 
 
-//Laskee siirtymien määrän ja ajan milloin siirtymä tapahtuu
+//Siirtymien määrä eli 4 slideä ja aika milloin siirtymä tapahtuu
 let counter = 1;
 setInterval(function(){
   document.getElementById('r' + counter).checked = true;
@@ -90,29 +90,3 @@ setInterval(function(){
   }
   
 }, 5000); //Siirtymien aikaväli millisekunneissa 5 sekunnin välein
-
-
-//let stopanimation = document.getElementsByClassName("slide");
-
-//stopanimation.addEventListener("mouseenter", function( event ) {
- 
-
-  
-/*
-document.querySelector('p')
-  .addEventListener('mouseover', () => {
-  
-  document.querySelector('p').style = 'visibility: hidden'
-});
-
-document.querySelector('img')
-  .addEventListener('mouseover', () => {
-  
-  document.querySelector('p').style = 'visibility: visible'
-});
-document.querySelector('img')
-  .addEventListener('mouseout', () => {
-  
-  document.querySelector('p').style = 'visibility: hidden'
-});
-*/

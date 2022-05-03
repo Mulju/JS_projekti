@@ -296,9 +296,9 @@ function printMovies(movieEvents) {
     contentContainer.appendChild(audTimeContainer);
 
     for(let j = 0; j < movieEvents[i].presentationInformation.length; j++) {
-      const p = document.createElement("p");
-      p.textContent = movieEvents[i].presentationInformation[j].time;
-      audTimeContainer.appendChild(p);
+      const timeH3 = document.createElement("h3");
+      timeH3.textContent = movieEvents[i].presentationInformation[j].time;
+      audTimeContainer.appendChild(timeH3);
       for(let k = 0; k < movieEvents[i].presentationInformation[j].theaAuditPres.length; k++) {
         const forVariable = movieEvents[i].presentationInformation[j].theaAuditPres[k];
         const p = document.createElement("p");
@@ -306,6 +306,12 @@ function printMovies(movieEvents) {
         p.textContent = forVariable.presentationMethod + " | " + forVariable.theatreName;
         auditContainer.appendChild(p);
         auditContainer.setAttribute("class", "auditContainer");
+        //if(movieEvents[i].presentationInformation[j].theaAuditPres.length != 1 && k != (movieEvents[i].presentationInformation[j].theaAuditPres.length - 1)) {
+          const line = document.createElement("div");
+          line.setAttribute("class", "line");
+          auditContainer.appendChild(line);
+          console.log("heipsulli");
+        //}
         audTimeContainer.appendChild(auditContainer);
       }
     }

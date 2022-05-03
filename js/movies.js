@@ -120,33 +120,8 @@ async function getMovieDates() {
   }
 }
 
-// Tämä funktio hakee kaikki elokuvat jotka ovat tällä hetkellä katalogissa
-async function getMovies() {
-  try {
-    const response = await fetch("https://www.finnkino.fi/xml/Events/");
-    
-    if (!response.ok) {
-      console.error("Tapahtui virhe.");
-      return;
-    }
-
-    const rawXML = await response.text();
-    const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
-    const events = data.querySelectorAll("Event");
-
-    const dropDownMenuEvents = document.getElementById("events");
-    events.forEach(element => {
-      const option = document.createElement("option");
-      option.innerHTML = element.querySelector("Title").innerHTML;
-      dropDownMenuEvents.appendChild(option);
-    })
-  } catch(error) {
-    console.error(error);
-  }
-}
-
 // Toimiva haku funktio
-async function getMovies2 () {
+async function getMovies () {
   const response = await fetch("https://www.finnkino.fi/xml/Schedule/?area=" + theaID + "&dt=" + searchDate);
   
   if (!response.ok) {
@@ -293,7 +268,7 @@ select[0].addEventListener("change", () => {
     }
   }
   // Tähän funktio kutsu joka suorittaa haun halutuilla parametreillä theaID ja date
-  getMovies2();
+  getMovies();
 });
 
 // Listener joka vaihtaa hakuun käytettyä päivämäärää
@@ -306,16 +281,5 @@ select[1].addEventListener("change", () => {
   }
 
   // Tähän funkkari joka suorittaa haun
-  getMovies2();
-});
-
-
-// Tämän voi todennäköisesti poistaa
-select[2].addEventListener("change", () => {
-  movName = select[2].value;
-  console.log(movName);
-});
-
-button.addEventListener("click", () => {
-  findMovieByName(movName);
+  getMovies();
 });

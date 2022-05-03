@@ -1,0 +1,21 @@
+.movies {
+  color: rgba(255, 255, 255);
+}
+
+.movies article {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.movies h2 {
+  font-size: 40px;
+}
+
+.movies a {
+  margin: 30px;
+}
+
+.line {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,.25);
+}

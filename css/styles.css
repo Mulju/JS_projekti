@@ -3,12 +3,22 @@ body {
 }
 
 .container {
-  width: 80%;
-  height: 300px;
   position: relative;
   background: #2c2c2c;
   margin: auto;
   border-radius: 6px;
+}
+
+.selectioncontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+select {
+  margin: auto;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .nappura {
@@ -42,6 +52,7 @@ html {
 	background: rgb(0, 0, 0); 
 	padding: 20px; 
 }
+
 /*
 #container { 
 	width: 100%;

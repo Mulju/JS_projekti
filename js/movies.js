@@ -14,7 +14,11 @@ let movName = "007 No Time to Die";
 const theaters = [];
 const dates = [];
 
-// Funktioita
+
+
+
+
+// Asynkronisia funktioita
 // Funktio, joka hakee Finnkinon auki olevat teatterit
 async function getMovieTheaters() {  
   try {
@@ -155,6 +159,7 @@ async function getMovies () {
           length: element.querySelector("LengthInMinutes").innerHTML,
           ageRating: element.querySelector("Rating").innerHTML,
           genres: element.querySelector("Genres").innerHTML,
+          eventURL: element.querySelector("EventURL").innerHTML,
           presentationInformation: presentationArray
         };
       }
@@ -165,6 +170,7 @@ async function getMovies () {
         length: element.querySelector("LengthInMinutes").innerHTML,
         ageRating: element.querySelector("Rating").innerHTML,
         genres: element.querySelector("Genres").innerHTML,
+        eventURL: element.querySelector("EventURL").innerHTML,
         presentationInformation: presentationArray
       };
     }
@@ -228,6 +234,68 @@ async function getMovies () {
   })
 
   console.log(movieEvents);
+  printMovies(movieEvents);
+}
+
+
+
+// Synkronisia funktioita
+
+function printMovies(movieEvents) {
+  const main = document.querySelector("main");
+
+  for(let i = 0; i < movieEvents.length; i++) {
+    const movieContainer = document.createElement("div");
+    movieContainer.setAttribute("class", "movies");
+    const contentContainer = document.createElement("div");
+    contentContainer.setAttribute("class", "content");
+    const article = document.createElement("article");
+    
+    if(movieEvents[i].movieImage) {
+      const a = document.createElement("a");
+      const img = document.createElement("img");
+      img.src = movieEvents[i].movieImage;
+      a.setAttribute("href", movieEvents[i].eventURL)
+      a.appendChild(img)
+      article.appendChild(a);
+    }
+
+    article.appendChild(contentContainer);
+    
+    const h2 = document.createElement("h2");
+    h2.textContent = movieEvents[i].movieName;
+    contentContainer.appendChild(h2);
+
+    const p1 = document.createElement("p");
+    p1.textContent = "Ikäraja: " + movieEvents[i].ageRating;
+    const p2 = document.createElement("p");
+    p2.textContent = "Genret: " + movieEvents[i].genres;
+    const p3 = document.createElement("p");
+    p3.textContent = "Elokuvan kesto: " + movieEvents[i].length + " minuuttia"
+    contentContainer.appendChild(p1);
+    contentContainer.appendChild(p2);
+    contentContainer.appendChild(p3);
+
+    movieContainer.appendChild(article);
+    
+    const line = document.createElement("div");
+    line.setAttribute("class", "line");
+
+    for(let j = 0; j < movieEvents[i].presentationInformation.length; j++) {
+      const p = document.createElement("p");
+      p.textContent = movieEvents[i].presentationInformation[j].time;
+      contentContainer.appendChild(p);
+      for(let k = 0; k < movieEvents[i].presentationInformation[j].theaAuditPres.length; k++) {
+        const forVariable = movieEvents[i].presentationInformation[j].theaAuditPres[k];
+        const p = document.createElement("p");
+        p.textContent = forVariable.presentationMethod + ", " + forVariable.theatreName;
+        contentContainer.appendChild(p);
+      }
+    }
+
+    main.appendChild(movieContainer);
+    main.appendChild(line);
+  }
 }
 
 // Tämä funktio lisää päivämäärän tai kuukauden alkuun 0 mikäli yksinumeroinen
@@ -257,6 +325,15 @@ function formatDates(date, num) {
   }
 }
 
+// Funktio joka tyhjentää dom-elementit
+function emptyElements() {
+  const main = document.querySelector("main");
+  while(main.firstElementChild) {
+      main.firstElementChild.remove();
+  }
+}
+
+
 
 // Eventlistenerejä
 // Listener joka vaihtaa hakuun käytetyn teatterin
@@ -267,7 +344,7 @@ select[0].addEventListener("change", () => {
       break;
     }
   }
-  // Tähän funktio kutsu joka suorittaa haun halutuilla parametreillä theaID ja date
+  emptyElements();
   getMovies();
 });
 
@@ -279,7 +356,6 @@ select[1].addEventListener("change", () => {
       break;
     }
   }
-
-  // Tähän funkkari joka suorittaa haun
+  emptyElements();
   getMovies();
 });

@@ -1,4 +1,5 @@
 'use strict'
+
 $(document).ready(function ($) {
   $(window).on("scroll", function () {
     //ADD .TIGHT

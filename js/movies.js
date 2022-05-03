@@ -160,7 +160,7 @@ async function getMovies2 () {
 
   // Ei vältsii tarvita jos elementtien luominen suoritetaan alla olevassa for eachissä
   const movieEvents = [];
-  
+
   events.forEach(element => {
     const auditoriumArray = [];
     const presentationArray = [];
@@ -237,17 +237,16 @@ async function getMovies2 () {
             timeNotInArray = false;
             jindex = j;
           }
-          console.log(movieEvents[index].presentationInformation[j].time + " ja " + timeHours);
         }
         
         // .push vain teatterin nimi ja 2D/3D jos muuttujan arvo false
         // jos muuttujan arvo true .push presentationelement
         if(timeNotInArray) {
+          presentationElement.theaAuditPres.push(theaAuditObject);
           movieEvents[index].presentationInformation.push(presentationElement);
         }
         else {
           movieEvents[index].presentationInformation[jindex].theaAuditPres.push(theaAuditObject);
-          console.log("Else lause");
         }
       }
     }
@@ -293,7 +292,6 @@ select[0].addEventListener("change", () => {
       break;
     }
   }
-  console.log(theaID);
   // Tähän funktio kutsu joka suorittaa haun halutuilla parametreillä theaID ja date
   getMovies2();
 });

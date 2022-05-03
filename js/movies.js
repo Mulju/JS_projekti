@@ -178,7 +178,6 @@ async function getMovies () {
     let movieNotInArray = true;
     let timeNotInArray = true;
     let index = 0;
-    let jindex = 0;
     
     for(let i = 0; i < movieEvents.length; i++) {
       // If lause joka tarkistaa ettei viitata NULL:iin
@@ -260,8 +259,9 @@ function printMovies(movieEvents) {
       const a = document.createElement("a");
       const img = document.createElement("img");
       img.src = movieEvents[i].movieImage;
-      a.setAttribute("href", movieEvents[i].eventURL)
-      a.appendChild(img)
+      a.setAttribute("href", movieEvents[i].eventURL);
+      a.setAttribute("class", "imageAnchor");
+      a.appendChild(img);
       article.appendChild(a);
     }
     
@@ -306,12 +306,11 @@ function printMovies(movieEvents) {
         p.textContent = forVariable.presentationMethod + " | " + forVariable.theatreName;
         auditContainer.appendChild(p);
         auditContainer.setAttribute("class", "auditContainer");
-        //if(movieEvents[i].presentationInformation[j].theaAuditPres.length != 1 && k != (movieEvents[i].presentationInformation[j].theaAuditPres.length - 1)) {
+        if(movieEvents[i].presentationInformation.length != 1 && j != (movieEvents[i].presentationInformation.length - 1)) {
           const line = document.createElement("div");
           line.setAttribute("class", "line");
           auditContainer.appendChild(line);
-          console.log("heipsulli");
-        //}
+        }
         audTimeContainer.appendChild(auditContainer);
       }
     }

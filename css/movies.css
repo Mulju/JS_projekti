@@ -3,26 +3,23 @@ main {
   flex-wrap: wrap;
 }
 
-.movies {
+article {
   color: rgba(255, 255, 255);
-  /*flex-basis: 50%;*/
-}
-
-.movies article {
   display: flex;
   flex-wrap: wrap;
-  flex-basis: 50%;
+  flex-direction: column;
+  width: 100%;
 }
 
-.movies h2 {
+h2 {
   font-size: 25px;
 }
 
-.movies a {
+a {
   margin: 30px;
 }
 
-.movies img {
+img {
   max-height: 300px;
 }
 .line {
@@ -30,14 +27,39 @@ main {
   border-bottom: 1px solid rgba(255,255,255,.25);
   width: 100%;
 }
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.audTimeContainer {
+  flex-basis: 40%;
+  margin-left: 40px;
+}
+
+.auditContainer {
+  margin-left: 40px;
+}
+
+.movieInfoContainer {
+  flex-basis: 40%;
+  margin-left: 40px;
+}
 /*
 .line:nth-of-type(2n) {
   display: none;
 }*/
-/*
-@media only screen and (min-width:600px) {
-	.movies img {
-    max-height: 300px;
+
+@media only screen and (min-width:700px) {
+  article {
+    flex-direction: row;
+  }
+
+  .content {
+    flex-direction: row;
   }
   /*.line {
     flex-basis: 100%;
@@ -54,5 +76,5 @@ main {
 	}
 	aside {
 		width:25%;
-	}
-}*/
+	}*/
+}

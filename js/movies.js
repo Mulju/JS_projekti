@@ -242,7 +242,6 @@ async function getMovies () {
   });
   console.log(sortedMovieEvents);
   printMovies(sortedMovieEvents);
-  
 }
 
 
@@ -253,8 +252,6 @@ function printMovies(movieEvents) {
   const main = document.querySelector("main");
 
   for(let i = 0; i < movieEvents.length; i++) {
-    const movieContainer = document.createElement("div");
-    movieContainer.setAttribute("class", "movies");
     const contentContainer = document.createElement("div");
     contentContainer.setAttribute("class", "content");
     const article = document.createElement("article");
@@ -267,12 +264,16 @@ function printMovies(movieEvents) {
       a.appendChild(img)
       article.appendChild(a);
     }
-
+    
     article.appendChild(contentContainer);
     
+    const movieInfoContainer = document.createElement("div");
+    movieInfoContainer.setAttribute("class", "movieInfoContainer");
+    contentContainer.appendChild(movieInfoContainer);
+
     const h2 = document.createElement("h2");
     h2.textContent = movieEvents[i].movieName;
-    contentContainer.appendChild(h2);
+    movieInfoContainer.appendChild(h2);
 
     const p1 = document.createElement("p");
     p1.textContent = "Ikäraja: " + movieEvents[i].ageRating;
@@ -280,28 +281,36 @@ function printMovies(movieEvents) {
     p2.textContent = "Genret: " + movieEvents[i].genres;
     const p3 = document.createElement("p");
     p3.textContent = "Elokuvan kesto: " + movieEvents[i].length + " minuuttia"
-    contentContainer.appendChild(p1);
-    contentContainer.appendChild(p2);
-    contentContainer.appendChild(p3);
-
-    movieContainer.appendChild(article);
+    movieInfoContainer.appendChild(p1);
+    movieInfoContainer.appendChild(p2);
+    movieInfoContainer.appendChild(p3);
     
     const line = document.createElement("div");
     line.setAttribute("class", "line");
 
+    const audTimeContainer = document.createElement("div");
+    const timeH2 = document.createElement("h2");
+    timeH2.textContent = "Näytösajat";
+    audTimeContainer.setAttribute("class", "audTimeContainer");
+    audTimeContainer.appendChild(timeH2);
+    contentContainer.appendChild(audTimeContainer);
+
     for(let j = 0; j < movieEvents[i].presentationInformation.length; j++) {
       const p = document.createElement("p");
       p.textContent = movieEvents[i].presentationInformation[j].time;
-      contentContainer.appendChild(p);
+      audTimeContainer.appendChild(p);
       for(let k = 0; k < movieEvents[i].presentationInformation[j].theaAuditPres.length; k++) {
         const forVariable = movieEvents[i].presentationInformation[j].theaAuditPres[k];
         const p = document.createElement("p");
+        const auditContainer = document.createElement("div");
         p.textContent = forVariable.presentationMethod + " | " + forVariable.theatreName;
-        contentContainer.appendChild(p);
+        auditContainer.appendChild(p);
+        auditContainer.setAttribute("class", "auditContainer");
+        audTimeContainer.appendChild(auditContainer);
       }
     }
 
-    main.appendChild(movieContainer);
+    main.appendChild(article);
     main.appendChild(line);
   }
 }

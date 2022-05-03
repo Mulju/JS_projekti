@@ -30,7 +30,7 @@ img {
 
 .content {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex-direction: column;
   flex-grow: 1;
 }
@@ -53,13 +53,28 @@ img {
   display: none;
 }*/
 
-@media only screen and (min-width:700px) {
+@media only screen and (min-width:750px) {
   article {
     flex-direction: row;
   }
 
   .content {
     flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .audTimeContainer {
+    flex-basis: 40%;
+    margin: auto;
+    margin-top: 0%;
+    margin-bottom: 0%;
+  }
+
+  .movieInfoContainer {
+    flex-basis: 40%;
+    margin: auto;
+    margin-top: 0%;
+    margin-bottom: 0%;
   }
   /*.line {
     flex-basis: 100%;

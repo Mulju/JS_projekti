@@ -1,21 +1,58 @@
+main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .movies {
   color: rgba(255, 255, 255);
+  /*flex-basis: 50%;*/
 }
 
 .movies article {
   display: flex;
   flex-wrap: wrap;
+  flex-basis: 50%;
 }
 
 .movies h2 {
-  font-size: 40px;
+  font-size: 25px;
 }
 
 .movies a {
   margin: 30px;
 }
 
+.movies img {
+  max-height: 150px;
+}
 .line {
   padding: 20px;
   border-bottom: 1px solid rgba(255,255,255,.25);
+  width: 100%;
+}
+/*
+.line:nth-of-type(2n) {
+  display: none;
+}*/
+
+@media only screen and (min-width:600px) {
+	.movies img {
+    max-height: 300px;
+  }
+  /*.line {
+    flex-basis: 100%;
+  }
+
+  .line:nth-of-type(2n) {
+    display: block;
+  }
+  header {
+		width:100%;
+	}
+	main {
+		width:75%;
+	}
+	aside {
+		width:25%;
+	}*/
 }

@@ -233,8 +233,16 @@ async function getMovies () {
     }
   })
 
-  console.log(movieEvents);
-  printMovies(movieEvents);
+  const sortedMovieEvents = movieEvents.sort((a, b) => {
+    if(a.movieName > b.movieName) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  console.log(sortedMovieEvents);
+  printMovies(sortedMovieEvents);
+  
 }
 
 
@@ -288,7 +296,7 @@ function printMovies(movieEvents) {
       for(let k = 0; k < movieEvents[i].presentationInformation[j].theaAuditPres.length; k++) {
         const forVariable = movieEvents[i].presentationInformation[j].theaAuditPres[k];
         const p = document.createElement("p");
-        p.textContent = forVariable.presentationMethod + ", " + forVariable.theatreName;
+        p.textContent = forVariable.presentationMethod + " | " + forVariable.theatreName;
         contentContainer.appendChild(p);
       }
     }

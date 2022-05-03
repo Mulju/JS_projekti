@@ -42,7 +42,7 @@ select {
 nav {
   background: #ffd900;
   margin: auto;
-  width: 80%;
+  width: 100%;
   padding: 10px;
   border-radius: 6px;
   position: sticky; top: 0;

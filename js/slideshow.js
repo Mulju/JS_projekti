@@ -1,6 +1,7 @@
-'use strict'
+'use strict';
 
 // Tämä funktio hakee 4 uusinta uutista
+// Vastaavien funktioiden kommentointia löytyy movies.js tiedostosta. En toista tässä niissä käytyä kommentointia.
 async function getNews() {
   try {
     const response = await fetch("https://www.finnkino.fi/xml/News/");
@@ -10,17 +11,25 @@ async function getNews() {
       return;
     }
 
+
     const rawXML = await response.text();
     const data =  await new DOMParser().parseFromString(rawXML, "text/xml");
     const news = data.querySelectorAll("NewsArticle");
     
     // Tehdään taulukko missä on neljän uusimman uutisen kuvat.
     const newsImages = [];
+
+    /* For loopin indeksit näyttävät varmasti kummalliselta.
+     * Siihen ei ole muuta selitystä kuin se, että finnkinon uutisapia hostaa varmasti joku kesähessu joka ei osaa hommaansa.
+     * Uutisapiin ilmestyy vähän väliä linkkejä jotka eivät ole finnkinon uutisia, vaan jotain muuta.
+     * Näillä indeksöinneillä valitsimme neljä uusinta uutista jotka toimivat.
+     */
     const newsArticles = [];
     for(let i = 7; i < 13; i++) {
       if(i == 8 || i == 9) {
         continue;
       }
+      // Tallennetaan uutisen kuvan URL sekä linkki artikkeliin
       newsImages.push(news[i].querySelector("ImageURL").innerHTML);
       newsArticles.push(news[i].querySelector("ArticleURL").innerHTML);
     }

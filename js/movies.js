@@ -278,6 +278,7 @@ async function getMovies () {
 
     // Kutsutaan tulostamiseen käytettyä funktiota, jolle annetaan parametrina järjestetty elokuvataulukko.
     printMovies(sortedMovieEvents);
+    // Tällä näkee konsolissa tietuerakenteen
     console.log(sortedMovieEvents);
   } catch(error) {
     console.error(error);

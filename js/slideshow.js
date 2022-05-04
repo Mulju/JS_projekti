@@ -56,6 +56,7 @@ async function getNews() {
 }
 //Funktio tekee img elementit slide classiin
 //Sijoittaa ylemmän taulukon kuvat img elementtiin
+//Sijoittaa linkin kuvaan
 async function kuva(slide, articles) {
   let imgfirst;
   let imgsecond;
@@ -88,14 +89,7 @@ async function kuva(slide, articles) {
     imgfourth.src = slide[3];
       
     slide_elem[3].appendChild(imgfourth);
-
-  } else {
-    const slide_elem = document.getElementsByClassName("slide");
-    imgfirst = document.createElement('img');
-    imgfirst.src = 'defaultkuva.jpg';
-    imgfirst.alt = 'error';
-    slide_elem[0].appendChild(imgfirst);
-  }
+  } 
 }
       
 getNews();
@@ -103,7 +97,7 @@ getNews();
 
 
 
-//Siirtymien määrä eli 4 slideä ja aika milloin siirtymä tapahtuu
+//Katsoo siirtymien määrän
 let counter = 1;
 setInterval(function(){
   document.getElementById('r' + counter).checked = true;
@@ -112,4 +106,4 @@ setInterval(function(){
     counter = 1;
   }
   
-}, 5000); //Siirtymien aikaväli millisekunneissa 5 sekunnin välein
+}, 5000); //Siirtymien aikaväli millisekunneissa 

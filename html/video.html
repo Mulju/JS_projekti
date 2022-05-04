@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Videosivu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Varela&display=swap" rel="stylesheet">
@@ -13,10 +13,11 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
+  <!--Wrapper elementti, joka kapenee, kun scrollaa sen loppuun-->
   <div class="wrapper">
     <div class="wrap">
   <div class="arrow animated bounce"></div>
-  
+   <!--Navigaatiomenu-->
   <nav>
     <div class="containernav nav" id="nav"> 
       <img id="nav-logo" src="../mhlogo.png">
@@ -25,7 +26,7 @@
       <a href="https://en.wikipedia.org/wiki/Turtle" class="nappura">Nappura</a>
     </div>
   </nav>
-
+  <!--Sivuun upotettu video-->
   <div class="videomain">
     <span class="dot"></span>
     <div class="videoframe">
@@ -36,12 +37,12 @@
       </div>
     </div>
   </div>
-
+  <!--Sivun osa, missä on tekstiä ja siihen liittyvät kuvat-->
   <section class="contentbox">
-    <div class="headline">VIDEOTEHTÄVÄN TEKEMINEN</div>
-    <div class="text">Repulsive questions contented him few extensive supported. Ask within entire season sex common far who family. As be valley warmth assure on. Park girl they rich hour new well way you. Face ye be me been room we sons fond.</div>
-    <div class="text">Arrival entered an if drawing request. Am immediate unwilling of attempted admitting disposing it. Handsome opinions on am at it ladyship.</div>
-    <div class="text">Repulsive questions contented him few extensive supported. As be valley warmth assure on. Park girl they rich hour new well way you. Face ye be me been room we sons fond.</div>
+    <div class="headline"><h4>VIDEOTEHTÄVÄN TEKEMINEN</h4></div>
+    <div class="text"><p>Käsikirjoitus:<br>Ville on tylsistynyt ja makoilee eri paikoissa kotonaan. Musiikki soi taustalla. Tämän jälkeen Ville makoilee sängyssä ja päättää laittaa viestiä kavereille. Kaveri ehdottaa elokuvaa ja toinen kaveri ilmoittaa Finnkinon uudesta nettisivusta. Seuraavaksi kuvataan nettisivudemoa eli esitellään joitain toimintoja, jonka jälkeen tulee ruutu, jossa on meidän logo.</p></div>
+    <div class="text"><p>Tavoitteet ja kohderyhmä:<br>Tavoitteena on mainostaa Finnkinoa ja lisätä niiden verkkosivujen käyttäkälukua ja samalla mainostaa omaa sivua.<br>Kohderyhmänä ovat kaikki, jotka ovat kiinnostuneita elokuvista ja varsinkin töissäkäyvät nuoret aikuiset, joilla on rahaa maksaa elokuva.</p></div>
+    <div class="text"><p>Mihin ongelmaan vastaa: <br>Jos käyttäjällä on tekemisen puute, voi hän käyttää nettisivuamme ja mennä katsomaan elokuvaa. Jos Finnkinon omat sivut ovat liian monimutkaiset ja vaikeat, voi käyttää meidän sivua, jotta oikean elokuvan löytäminen olisi helpompaa.</p></div>
     <div class="imgclass">
       <figure id="image"> 
         <img src="../01.jpg" alt="Videosuunnittelu">
@@ -51,13 +52,22 @@
   </section>
 </div>
 </div>
-
+  <!--Sivun loppuosa-->
   <footer>
       <div class="footercontent footer">
-          <img id="footer-logo" src="../mhlogo.png">
-        <img class="profile" src="../samuli.jpg" width="130" height="170"/>
-        <img class="profile" src="../ville.jpg" width="130" height="170"/>
-        <img class="profile" src="../topias.jpg" width="130" height="170"/>
+        <img id="footer-logo" src="../mhlogo.png">
+        <figure>
+          <img class="profile" src="../samuli.jpg"  height="170"/>
+          <figcaption><br>Samuli Haltimo</figcaption>
+        </figure>
+        <figure>
+          <img class="profile" src="../ville.jpg"  height="170"/>
+          <figcaption><br>Ville Varhala</figcaption>
+        </figure>
+        <figure>
+          <img class="profile" src="../topias.jpg"  height="170"/>
+          <figcaption><br>Topias Koskinen</figcaption>
+        </figure>
       </div>
   </footer>
 

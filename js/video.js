@@ -1,5 +1,5 @@
 'use strict'
-//Funktio, joka tapahtuu kun scrollataan
+//Funktio, joka kutsutaan kun scrollataan
 $(document).ready(function ($) {
   $(window).on("scroll", function () {
     //Lisää tight classin, kun mennään sivun loppuun. Piilottaa nuolen.
@@ -14,7 +14,7 @@ $(document).ready(function ($) {
       $(".arrow").show();
     }
   });
-//Kun olet footterissa ja kilkkaat wrapperia niin footer menee takaisin piiloon (hieno animaatio)
+//Kun olet footterissa ja klikkaat wrapperia niin footer menee takaisin piiloon (hieno animaatio)
   $("html").on("click", "body.tight .wrapper", function () {
     $("html, body").animate(
       {

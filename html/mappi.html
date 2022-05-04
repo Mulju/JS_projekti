@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MH Kartta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Varela&display=swap" rel="stylesheet">
+  <link href="../css/map.css" rel="stylesheet">
+  <script src="../js/maps.js"></script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVbQEIVKUKqA49kjDj1nnzWW2ehEUNRX4&callback=initMap&libraries=places">
+</script>
+</head>
+<body>
+  <nav>
+    <div class="container navigation" id="nav">
+      <img id="header-logo" alt="MH logo" src="../mhlogo.png">
+      <a href="index.html" class="nappura">Etusivu</a>
+      <a href="video.html" class="nappura">Video</a>
+      <a href="mappi.html" class="nappura">Kartta</a>
+    </div>
+  </nav>
+
+  <div id="map" class="map" style="overflow: auto;"></div>
+  <!--Reitti inputit-->
+  <input id="originInput" class="controls" placeholder="Lähtöpaikka" type="text">
+  
+  <input id="destinationInput" class="controls" placeholder="Määränpää" type="text">
+  <!--Radio napit-->
+  <div id="modeSelector" class="controls">
+      <input type="radio" name="type" id="changemode-walking" checked="checked">
+      <label for="changemode-walking">Kävely</label>
+
+      <input type="radio" name="type" id="changemode-driving" checked="checked">
+      <label for="changemode-driving">Ajaminen</label>
+
+      <input type="radio" name="type" id="changemode-transit" checked="checked">
+      <label for="changemode-transit">Julkinen</label>
+  </div>
+  <img id="MHKino" alt="kuva MH kinosta" src="../MHKino.jpg">
+</body>
+</html>

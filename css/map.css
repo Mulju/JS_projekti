@@ -1,0 +1,128 @@
+#map {
+  height: 80%;
+  padding: 15px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  border-radius: 6px;
+}
+
+html,
+body {
+  height: 90%;
+  width: 80%;
+  margin: auto;
+  font-family: 'Cardo', serif;
+  background: rgb(0, 0, 0); 
+	padding: 20px; 
+}
+
+.container {
+  position: relative;
+  background: #2c2c2c;
+  margin: auto;
+  border-radius: 6px;
+}
+
+.selectioncontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+select {
+  margin: auto;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.nappura {
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  padding: 10px;
+  margin: auto;
+  border-radius: 6px;
+  background: rgb(255, 213, 0);
+}
+
+.navigation {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+nav {
+  background: #ffd900;
+  margin: auto;
+  padding: 10px;
+  border-radius: 6px;
+  position: sticky; top: 0;
+}
+
+#header-logo {
+  height: 60px;
+  margin: 20px;
+}
+
+#MHKino {
+  width: 100%;
+  margin-bottom: 30px;
+  border-radius: 6px;
+}
+
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#originInput,
+#destinationInput {
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 12px;
+  text-overflow: ellipsis;
+  width: 250px;
+}
+
+#origin-input:focus,
+#destination-input:focus {
+  border-color: #ffd900;
+}
+
+#modeSelector {
+  color: black;
+  background-color: #ffd900;
+  margin-left: 14px;
+  padding: 5px 11px 0px 11px;
+}
+
+#mode-selector label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.positionButton{
+  object-position: right top;
+  background-color: #fff;
+  border: 0;
+  border-radius: 2px;
+  margin: 10px;
+  padding: 0 0.5em;
+  font-size: 18;
+  overflow: auto;
+  height: 40px;
+  cursor: pointer;
+}
+.custom-map-control-button:hover {
+  background: rgb(235, 235, 235);
+}
+

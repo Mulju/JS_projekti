@@ -19,12 +19,26 @@ async function getNews() {
     // Tehdään taulukko missä on neljän uusimman uutisen kuvat.
     const newsImages = [];
 
-    /* For loopin indeksit näyttävät varmasti kummalliselta.
+    /* For loopin loop ehto näyttää varmasti kummalliselta.
      * Siihen ei ole muuta selitystä kuin se, että finnkinon uutisapia hostaa varmasti joku kesähessu joka ei osaa hommaansa.
      * Uutisapiin ilmestyy vähän väliä linkkejä jotka eivät ole finnkinon uutisia, vaan jotain muuta.
-     * Näillä indeksöinneillä valitsimme neljä uusinta uutista jotka toimivat.
+     * Tällä loop ehdolla ja counterin käytöllä saamme uutiset joissa on:
+     * a) kuva
+     * b) oikea uutinen eikä jokin muu
      */
     const newsArticles = [];
+    let counter = 0;
+    for(let i = 0; counter < 5; i++) {
+      if(news[i].querySelector("ImageURL").innerHTML) {
+        counter++;
+        // Toinen "uutisartikkeli" jossa on kuva ei ole oikeasti uutisartikkeli
+        if(counter != 2) {
+          // Tallennetaan uutisen kuvan URL sekä linkki artikkeliin
+          newsImages.push(news[i].querySelector("ImageURL").innerHTML);
+          newsArticles.push(news[i].querySelector("ArticleURL").innerHTML);
+        }
+      }
+    }/*
     for(let i = 7; i < 13; i++) {
       if(i == 8 || i == 9) {
         continue;
@@ -32,7 +46,7 @@ async function getNews() {
       // Tallennetaan uutisen kuvan URL sekä linkki artikkeliin
       newsImages.push(news[i].querySelector("ImageURL").innerHTML);
       newsArticles.push(news[i].querySelector("ArticleURL").innerHTML);
-    }
+    }*/
 
     // Kutsutaan slideshow funktiota, kun fetchaus on valmis
     await kuva(newsImages, newsArticles);
